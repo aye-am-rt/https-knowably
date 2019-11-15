@@ -1,0 +1,45 @@
+<nav class="navbar navbar-light navbar-dark justify-content-between">
+        <a class="navbar-brand" routerLink = "/dashboard" style="padding-top:15px; padding-left: 15px; font-size: 2rem;">Knowably</a>
+</nav>
+<div class="jumbotron" style="background-color: grey;">
+        <div class='col-xs-12 col-sm-12 col-md-12 col-lg-12 '>
+                <!-- Search form -->
+                <input class="form-control" type="text" placeholder="Search" aria-label="Search" >
+                <div class="col-lg 12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="card-body">
+                        <h3>{{query}}</h3>
+                        <span *ngIf = "flag">
+                                <div *ngFor = "let not of result; index as i">
+                                        <p>{{i+1}} : {{not}}</p>
+                                </div>
+                        </span>
+                        <div role="group" aria-label="Basic example" style="float: right;">
+                                <a (click)= "userLike(query, result)" style="padding-right: 10px; color: blue; font-size: 20px;">Like</a>
+                                <a (click)= "userReport(query, result)" style="color: blue; font-size: 20px;">Report</a>
+                                <br>
+                        </div>
+                        <br>
+                        </div>
+                </div>
+                </div>
+
+
+                <!-- <hr>
+        <div class="list">
+        <h2>List Group With Custom Content</h2>
+        <div class="list-group">
+        <a href="#" class="list-group-item">
+        <h4 class="list-group-item-heading">First List Group Item Heading</h4>
+        <p class="list-group-item-text">List Group Item Text</p>
+        </a>
+        <a href="#" class="list-group-item">
+        <h4 class="list-group-item-heading">Second List Group Item Heading</h4>
+        <p class="list-group-item-text">List Group Item Text</p>
+        </a>
+        <a href="#" class="list-group-item">
+        <h4 class="list-group-item-heading">Third List Group Item Heading</h4>
+        <p class="list-group-item-text">List Group Item Text</p>
+        </a>
+        </div>
+        </div> -->
+</div>

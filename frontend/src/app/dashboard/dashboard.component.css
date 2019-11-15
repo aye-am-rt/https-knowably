@@ -1,0 +1,24 @@
+.row{
+ padding-top: 50px ;
+ padding-bottom: 50px;
+}
+.container{
+  padding-top: 90px;
+}
+@media (max-width: 768px){
+    .row{
+      height: 500px;
+    }
+  }
+
+  @media (max-width: 425px){
+    .row{
+      height: 700px;
+    }
+  }
+  @media (max-width: 1024px){
+    .row{
+      height: 800px;
+    }
+    
+  }

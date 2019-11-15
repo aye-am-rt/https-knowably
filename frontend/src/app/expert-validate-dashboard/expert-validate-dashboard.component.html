@@ -1,0 +1,41 @@
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
+
+<!------ Include the above in your HEAD tag ---------->
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+  <a class="navbar-brand" routerLink = "/dashboard" style="padding-top:15px; padding-left: 15px; font-size: 2rem;">Knowably</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav ml-auto">
+      <li class="nav-item active">
+        <a class="nav-link" routerLink = "/login" (click)="doLogout()" style="padding-top:15px; padding-right: 15px; font-size: 1rem; padding-left: 15px;">SignOut <span class="sr-only">(current)</span></a>
+      </li>
+    </ul>
+  </div>
+</nav>
+<hr>
+
+<div class="jumbotron">
+<div class="card text-center col-sm-4" style="width: auto;padding-top: 10px;align-content: center;margin: auto  ">
+	<div class="card-header" style="width: auto;color: brown" >
+	  Data to be validated
+	</div>
+	<div class="card-body">
+	  <h5 class="card-title text-center" style="color: black">Domain</h5>
+    <div id="clear" *ngIf="collapsed">
+	  <div *ngFor="let domaindata of domaindata" style="color: black">
+
+		<p class="card-text" style="color: black"><span class="text-uppercase" style="color: black">{{domaindata.key}} </span> :  {{domaindata.value}}</p>
+	  </div>
+    </div>
+	  <button class="justify-content-center" mat-raised-button color="primary" (click)="openDialog()">edit<span class="glyphicon glyphicon-pencil"></span></button>
+	  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	  <button class="justify-content-center" mat-raised-button color="primary" (click)="clearAll()">clear<span class="glyphicon glyphicon-pencil"></span></button>
+
+	</div>
+  </div>
+
+</div>

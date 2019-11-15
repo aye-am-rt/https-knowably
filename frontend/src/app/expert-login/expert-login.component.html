@@ -1,0 +1,29 @@
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+		<a class="navbar-brand" routerLink = "/dashboard" style="padding-top:15px; padding-left: 15px; font-size: 2rem;">Knowably</a>
+		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+		  <span class="navbar-toggler-icon"></span>
+		</button>
+
+		<div class="collapse navbar-collapse" id="navbarSupportedContent">
+		  <ul class="navbar-nav ml-auto">
+			<li class="nav-item active">
+			  <a class="nav-link" routerLink = "/register" style="padding-top:15px; padding-right: 15px; font-size: 1rem; padding-left: 15px;">SignUp <span class="sr-only">(current)</span></a>
+			</li>
+		  </ul>
+		</div>
+	  </nav>
+	  <hr>
+<br><br>
+<form #login="ngForm" (ngSubmit)= loginExpert(login.value)>
+	<div class="main-w3layouts wrapper">
+		<div class="main-agileinfo">
+			<div class="agileits-top">
+        <input class="text email" type="email" name="name" placeholder="Email" required="" ngModel>
+        <input class="text" type="password" name="password" placeholder="Password" required="" ngModel>
+        <!-- <input type="submit" value="SIGNUP"> -->
+					<button type="submit" class="button"  >LogIn</button>
+				<p>Dont't have an Account? <a routerLink="/register" routerLinkActive="active"> Register Now!</a></p>
+			</div>
+		</div>
+	</div>
+</form>

@@ -1,0 +1,19 @@
+/* You can add global styles to this file, and also import other style files */
+.jumbotron{
+    background-color: rgba(255,255,255, 0.12);
+    bottom: 3rem; 
+    height: 460px; 
+  }
+*{
+    color: white;
+    font-family: 'Times New Roman', Times, serif;
+    text-shadow: 1px 1px 0 gray;
+}
+hr{
+    border-color:gray;
+}
+nav{
+    background: black;
+}
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

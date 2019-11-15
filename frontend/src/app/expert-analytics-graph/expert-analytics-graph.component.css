@@ -1,0 +1,37 @@
+#head {
+    text-align: center;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+}
+a h2 {
+    color: #FFFFFF;
+    text-decoration: none;
+}
+a h2:hover {
+    color: #FFFFFF;
+    text-decoration: none;
+}
+mat-card {
+    width: 31.33%;
+    margin-left: 1%;
+    margin-right: 1%;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    float: left;
+}
+.wrapper {
+    background: #e9ecef;
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    min-height: 68%;
+  }
+#butn {
+    text-align: center;
+}
+.mat-raised-button {
+    margin-top: 2rem;
+}
+.mat-raised-button:first-of-type {
+    margin-right: 4rem;
+}

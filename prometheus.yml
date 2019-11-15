@@ -1,0 +1,23 @@
+global:
+  scrape_interval:     15s # Set the scrape interval to every 15 seconds.
+  evaluation_interval: 15s # Evaluate rules every 15 seconds.
+  # scrape_timeout is set to the global default (10s).
+# Load rules once and periodically evaluate them according to the global 'evaluation_interval'.
+rule_files:
+# - "first_rules.yml"
+# - "second_rules.yml"
+# A scrape configuration containing exactly one endpoint to scrape:
+# Here it's Prometheus itself.
+scrape_configs:
+  # The job name is added as a label job=<job_name> to any timeseries scraped from this config.
+  - job_name: 'prometheus'
+    # metrics_path defaults to '/metrics'
+    # scheme defaults to 'http'.
+    static_configs:
+      - targets: ['172.23.239.104::9090']
+  - job_name: 'spring-actuator'
+    metrics_path: '/actuator/prometheus'
+    scrape_interval: 10s
+    static_configs:
+      #      - targets: ['127.0.0.1:8063']
+      - targets: ['13.127.108.14:8099', '13.127.108.14:8089', '13.127.108.14:8050' , '13.127.108.14:8093', '13.127.108.14:8015', '13.127.108.14:8111', '13.127.108.14:8087','13.127.108.14:6379','13.127.108.14:8088','13.127.108.14:8086','13.127.108.14:8010','13.127.108.14:8090','13.127.108.14:8060','13.127.108.14:8065']

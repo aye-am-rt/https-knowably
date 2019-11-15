@@ -1,0 +1,19 @@
+
+
+<form #expertdata="ngForm" class="form-style-4" (ngSubmit)="onClickSubmit(expertdata.value)">
+  <div *ngFor="let x of data">
+    <label style="color: black">{{x.key}}
+      <input style="color: brown" name="{{x.key | uppercase}}" value="{{x.value}}" [readonly]="x.type=='result'?editable:!editable" ngModel={{x.value}}>
+      <ng-template [ngIf]="x.type=='result'">
+      <select name="status{{x.key}}" ngModel>
+        <option style="color: black">add</option>
+        <option style="color: black">delete</option>
+      </select>
+    </ng-template>
+
+    </label>
+    <br />
+  </div>
+  <input type="submit" class="btn btn-primary" mat-raised-button color="primary"  value="submit" />
+</form>
+

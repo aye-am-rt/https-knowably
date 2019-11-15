@@ -1,0 +1,55 @@
+h1 {
+    font-size: 2rem;
+    font-family: 'Lato', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-weight: 700;
+  color: white;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  }
+.jumbotron{
+  height: 420px;
+}
+  .searchContainer {
+  display: inline-flex;
+  flex: 1 1 300px;
+  position: relative;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.micIcon {
+  position: absolute;
+  padding: 0.5rem;
+  right: 10px;
+  font-size: 25px;
+  color: black;
+}
+
+.searchBox {
+  border: 0;
+  padding: 0.5rem 0.5rem 0.5rem 0;
+  flex: 1;
+  color: black;
+}
+
+  @media (min-width: 768px) {
+    h1 {
+      font-size: 3rem;
+    }
+
+  }
+
+
+  @media (min-width: 768px) {
+    h1 {
+      font-size: 3rem;
+    }
+  }
+
+  @media (max-width: 768px){
+    .btn-block{
+      margin-top: 5px;
+    }
+  }

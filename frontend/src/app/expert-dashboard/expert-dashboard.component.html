@@ -1,0 +1,36 @@
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+		<a class="navbar-brand" routerLink = "/dashboard" style="padding-top:15px; padding-left: 15px; font-size: 2rem;">Knowably</a>
+		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+		  <span class="navbar-toggler-icon"></span>
+		</button>
+
+		<div class="collapse navbar-collapse" id="navbarSupportedContent">
+		  <ul class="navbar-nav ml-auto">
+			<li class="nav-item active">
+			  <a class="nav-link" routerLink = "/login" (click)="doLogout()" style="padding-top:15px; padding-right: 15px; font-size: 1rem; padding-left: 15px;">SignOut <span class="sr-only">(current)</span></a>
+			</li>
+		  </ul>
+		</div>
+	  </nav>
+	  <hr>
+<br><br>
+<form #expert_input="ngForm" (ngSubmit)= inputData(expert_input.value)>
+	<div class="main-w3layouts wrapper">
+		<div class="main-agileinfo">
+			<div class="agileits-top">
+				<p style="font-size: 30px; line-height: 1em; font-family: cursive;">Welcome</p>
+				<p style="font-size: 30px; line-height: 0%;">{{userId}}</p>
+        <input class="text domain" type="text" name="domain" placeholder="Domain" required="" required ngModel>
+        <input class="text" type="text" name="concept" placeholder="Concept" required="" ngModel>
+        <input type="file" name="files" style="padding-top: 5px;"
+               #uploads  (change)="onChange(uploads.files)"  multiple
+               value="process">
+        <!-- <input type="submit" value="SIGNUP"> -->
+					<button type="submit" class="button"  >Submit</button>
+			</div>
+		</div>
+		</div>
+</form>
+<div class="wrapper" id="lowdiv">
+	<a mat-raised-button id="buttonsp" color="primary" routerLink="/expert-analytics">Go to Expert Analytics</a>
+</div>

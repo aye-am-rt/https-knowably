@@ -1,0 +1,366 @@
+version: '3.1'
+services:
+  frontend:
+    image: angular-image:1.0.0
+    build: frontend/
+    restart: always
+    container_name: frontend-container
+    ports:
+      - 4200:80
+
+  mysql:
+    image: mysql:5.7
+    ports:
+      - 3306:3306
+    container_name: mysql
+    volumes:
+      - $HOME/mysql:/data/db
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: demo
+      MYSQL_PASSWORD: root
+      MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
+
+  cassandra:
+    image: cassandra:latest
+    ports:
+      - "9042:9042"
+      - "9160:9160"
+    container_name: cassandra
+
+  zookeeper:
+    image: wurstmeister/zookeeper
+    ports:
+      - "2181:2181"
+    restart: always
+
+  kafka:
+    image: wurstmeister/kafka:latest
+    container_name: kafka
+    restart: always
+    depends_on:
+      - zookeeper
+    links:
+      - zookeeper:zk
+    environment:
+      KAFKA_LISTENERS: INSIDE://:9092,OUTSIDE://:9094
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INSIDE:PLAINTEXT,OUTSIDE:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: INSIDE
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_DELETE_TOPIC_ENABLE: "true"
+      KAFKA_LOG_RETENTION_HOURS: 1
+      KAFKA_MESSAGE_MAX_BYTES: 10000000
+      KAFKA_REPLICA_FETCH_MAX_BYTES: 10000000
+      KAFKA_GROUP_MAX_SESSION_TIMEOUT_MS: 600000
+      KAFKA_NUM_PARTITIONS: 3
+      KAFKA_DELETE_RETENTION_MS: 1000
+
+
+  eureka-server:
+    build: eureka-server/
+    container_name: eureka-server
+    restart: always
+    ports:
+      - 8761:8761
+    healthcheck:
+      test: "exit 0"
+
+  config-server:
+    build: config-server/
+    container_name: config-server
+    restart: always
+    ports:
+      - 8888:8888
+    healthcheck:
+      test: "exit 0"
+
+  api-gateway:
+    build: api-gateway/
+    container_name: api-gateway
+    depends_on:
+      - config-server
+      - eureka-server
+    links:
+      - eureka-server
+    restart: always
+    ports:
+      - 8080:8080
+    healthcheck:
+      test: "exit 0"
+
+  mongo:
+    image: mongo
+    container_name: mongo
+    restart: always
+    ports:
+      - 27017:27017
+    volumes:
+      - $HOME/mongo:/data/db
+
+  webcrawler-service:
+    image: webcrawler-service
+    build: web-crawler-service/
+    restart: always
+    container_name: webcrawler-container
+    depends_on:
+      - kafka
+      - config-server
+      - eureka-server
+    links:
+      - kafka
+      - config-server
+      - eureka-server
+    ports:
+      - 8090:8090
+
+  google-search:
+      image: google-search
+      build: google-search-api-service/
+      restart: always
+      container_name: google-search-container
+      depends_on:
+        - mongo
+        - eureka-server
+        - config-server
+        - kafka
+      links:
+        - mongo
+        - kafka
+        - eureka-server
+        - config-server
+      ports:
+        - 8050:8050
+      volumes:
+        - $HOME/mongo:/data/db
+  user:
+    image: user-service
+    build: user-service/
+    restart: always
+    ports:
+      - 8010:8010
+    container_name: user
+    depends_on:
+      - mysql
+      - config-server
+      - eureka-server
+    links:
+      - mysql
+      - eureka-server
+      - config-server
+
+  wikiScrapperMedical-service:
+    image: wikiscrappermedical-service
+    build: wiki-scrapper-medical-service/
+    restart: always
+    container_name: webScrapperMedical-container
+    depends_on:
+      - kafka
+      - config-server
+      - eureka-server
+    links:
+      - kafka
+      - config-server
+      - eureka-server
+    ports:
+      - 8060:8060
+
+  wikiScrapperMovie-service:
+    image: wikiscrappermovie-service
+    build: wiki-scrapper-movie-service/
+    restart: always
+    container_name: webScrapperMovie-container
+    depends_on:
+      - kafka
+      - config-server
+      - eureka-server
+    links:
+      - kafka
+      - config-server
+      - eureka-server
+    ports:
+      - 8065:8065
+
+  neo4j-apoc:
+    image: neo4j_apoc:1.0.0
+    build: neo4j_apoc-service/
+    restart: always
+    container_name: neo4j-apoc-container
+    volumes:
+      - $HOME/neo4j:/data
+    depends_on:
+      - kafka
+      - eureka-server
+    links:
+      - kafka
+      - eureka-server
+    environment:
+      NEO4J_AUTH: none
+    ports:
+      - 7474:7474
+      - 7687:7687
+      - 7473:7473
+  data-populator:
+    image: data-populator:1.0.0
+    build: data-populator-service/
+    restart: always
+    container_name: data-populator-container
+    depends_on:
+      - neo4j-apoc
+      - kafka
+      - eureka-server
+      - config-server
+    links:
+      - neo4j-apoc
+      - kafka
+      - config-server
+      - eureka-server
+    ports:
+      - 8089:8089
+
+  notification-service:
+    image: notification-service
+    build: notification-service
+    restart: always
+    container_name: notification-container
+    depends_on:
+      - kafka
+      - config-server
+      - eureka-server
+    links:
+      - kafka
+      - config-server
+      - eureka-server
+    ports:
+      - 8443:8443
+  result-fetcher:
+    image: result-fetcher:1.0.0
+    build: result-fetcher
+    restart: always
+    container_name: result-fetcher-container
+    depends_on:
+      - neo4j-apoc
+      - kafka
+      - config-server
+      - eureka-server
+    links:
+      - neo4j-apoc
+      - kafka
+      - config-server
+      - eureka-server
+    ports:
+      - 8088:8088
+
+  redis:
+    image: redis
+    container_name: redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - /DB/redis:/usr/local/etc/redis/redis.conf
+    environment:
+      - ALLOW_EMPTY_PASSWORD=yes
+    entrypoint: redis-server --appendonly yes
+    healthcheck:
+      test: "exit 0"
+
+  redis-spring:
+     image: redis-spring:1.0.0
+     restart: always
+     container_name: redis-service-container
+     build: redis-service/
+     depends_on:
+       - redis
+       - kafka
+     links:
+       - redis
+       - kafka
+     ports:
+       - 8134:8134
+     healthcheck:
+      test: "exit 0"
+
+  queryservice:
+    image: queryservice
+    build: queryservice/
+    restart: always
+    container_name: query-service-container
+    depends_on:
+      - eureka-server
+      - config-server
+      - kafka
+    links:
+      - kafka
+      - eureka-server
+      - config-server
+    ports:
+      - 8087:8087
+    volumes:
+      - ./queryservice/resources:/usr/src/resources
+
+  analytics:
+      image: analytics-service
+      build: analytics-service/
+      restart: always
+      container_name: analytics-service-container
+      depends_on:
+        - cassandra
+        - eureka-server
+        - config-server
+      links:
+        - cassandra
+        - eureka-server
+        - config-server
+      ports:
+        - 8099:8099
+  quartz-scheduler:
+    image: quartz-scheduler
+    build: quartz-scheduler/
+    restart: always
+    container_name: quartz-scheduler-container
+    depends_on:
+      - kafka
+      - config-server
+      - eureka-server
+    links:
+      - kafka
+      - config-server
+      - eureka-server
+    ports:
+      - 8111:8111
+    healthcheck:
+      test: "exit 0"
+
+  prometheus:
+    image: prom/prometheus
+    ports:
+      - 9090:9090
+    restart: always
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+  grafana:
+    image: grafana/grafana
+    ports:
+      - "3000:3000"
+    depends_on:
+      - prometheus
+  nlp-microservice:
+    image: nlp-microservice
+    build: nlp-microservice/
+    restart: always
+    container_name: nlp-microservice
+    depends_on:
+      - mongo
+      - eureka-server
+      - config-server
+      - kafka
+    links:
+      - mongo
+      - kafka
+      - eureka-server
+      - config-server
+    ports:
+      - 8093:8093
+    volumes:
+      - $HOME/mongo:/data/db
+
+

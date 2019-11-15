@@ -1,0 +1,48 @@
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+    <a class="navbar-brand" routerLink = "/dashboard" style="padding-top:15px; padding-left: 15px; font-size: 2rem;">Knowably</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item active">
+          <a class="nav-link" routerLink = "/login" style="padding-top:15px; padding-right: 15px; font-size: 1rem;padding-left: 15px;">Expert Login <span class="sr-only">(current)</span></a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+  <hr>
+<div class="jumbotron">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-6 mx-auto">
+        <h1 class="mb-5" style="font-family: 'Pirata One', cursive;">Medical Domain</h1>
+      </div>
+      <div class="col-md-10 col-lg-12 col-xl-7 mx-auto">
+        <form  #gSearch="ngForm" (ngSubmit)= userSearch(gSearch.value)  id="gSearch">
+          <div class="form-row">
+            <div class="searchContainer">
+              <input type="text" class="searchBox" placeholder="    Type here to search..." name="searchTerm"  #searchKey id="searchKey" ngModel>
+              <!-- <img class="mic" (click)="activateSpeechSearch()" src="https://upload.wikimedia.org/wikipedia/commons/2/22/Google_microphone_logo.png"> -->
+              <!-- fa fa-microphone -->
+              <i class="fa fa-microphone micIcon" (click)="activateSpeechSearch()"></i>
+            </div>
+            <div class="col-12 col-md-3">
+              <button type="submit" class="btn btn-block btn-lg btn-dark">Search</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+
+  </div>
+</div>
+<div class="col-lg 12 col-md-12 col-sm-12 col-xs-12" >
+  <div class="card-body">
+  <h3>Answer</h3>
+          <p>{{greetings}}</p>
+  <!-- {{ans?.notifications}} -->
+<!-- <span *ngIf="(notifications$|async).length>0">{{notifications$|async}}</span> -->
+  </div>
+</div>

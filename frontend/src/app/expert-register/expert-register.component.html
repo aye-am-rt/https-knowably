@@ -1,0 +1,34 @@
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+		<a class="navbar-brand" routerLink = "/dashboard" style="padding-top:15px; padding-left: 15px; font-size: 2rem;">Knowably</a>
+		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+		  <span class="navbar-toggler-icon"></span>
+		</button>
+
+		<div class="collapse navbar-collapse" id="navbarSupportedContent">
+		  <ul class="navbar-nav ml-auto">
+			<li class="nav-item active">
+			  <a class="nav-link" routerLink = "/login" style="padding-top:15px; padding-right: 15px; font-size: 1rem;padding-left: 15px;">Expert Login <span class="sr-only">(current)</span></a>
+			</li>
+		  </ul>
+		</div>
+	  </nav>
+	  <hr>
+<br><br>
+<form #registerExpert="ngForm" (ngSubmit)= createExpert(registerExpert.value)>
+	<div class="main-w3layouts wrapper">
+		<div class="main-agileinfo">
+			<div class="agileits-top">
+        <input class="text" type="text" name="Username" placeholder="Username" required="" ngModel>
+        <input class="text email" type="email" name="email" placeholder="Email" required="" ngModel>
+        <input class="text" type="password" name="password" placeholder="Password" required="" ngModel>
+
+        <input type="file" name="files" class="form-control"
+               #uploads  (change)="onChange(uploads.files)"  multiple
+               value="process">
+        <!-- <input type="submit" value="SIGNUP"> -->
+					<button type="submit" class="button"  >SignUp</button>
+				<p>Have an Account Already? <a routerLink="/login" routerLinkActive="active"> Login Now!</a></p>
+			</div>
+		</div>
+		</div>
+</form>
